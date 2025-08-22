@@ -10,7 +10,7 @@ export const meta = () => [
   },
 ];
 
-const Auth = () => {
+export default function Auth() {
   const { isLoading, auth } = usePuterStore();
   const location = useLocation();
   const next = location.search.split("next=")[1];
@@ -53,6 +53,4 @@ const Auth = () => {
       </div>
     </main>
   );
-};
-
-export default Auth;
+}
