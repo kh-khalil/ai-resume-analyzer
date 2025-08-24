@@ -1,87 +1,31 @@
-# Welcome to React Router!
+# Resumind — AI Resume Analyzer
 
-A modern, production-ready template for building full-stack React applications using React Router.
+A small learning project that analyzes uploaded resumes (PDF) and returns AI-powered feedback and ATS (Applicant Tracking System) scores. This project demonstrates a full-stack React app using React Router, TailwindCSS, client-side file handling, and an external "Puter" runtime exposed on `window.puter` for storage and AI calls.
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/remix-run/react-router-templates/tree/main/default)
+This repository is a learning project based on the JSM tutorial on YouTube: https://youtu.be/iYOz165wGkQ?si=6rNlGDtTYBsKFp-r
 
-## Features
+What it does
 
-- 🚀 Server-side rendering
-- ⚡️ Hot Module Replacement (HMR)
-- 📦 Asset bundling and optimization
-- 🔄 Data loading and mutations
-- 🔒 TypeScript by default
-- 🎉 TailwindCSS for styling
-- 📖 [React Router docs](https://reactrouter.com/)
+- Upload a PDF resume (single page supported) via the UI ([app/components/FileUploader.tsx](app/components/FileUploader.tsx)).
+- Convert the first PDF page to an image ([`convertPdfToImage`](app/lib/pdf2img.ts)).
+- Upload resume and generated image to the browser-hosted Puter storage via [`usePuterStore`](app/lib/puter.ts).
+- Request AI feedback using a prepared instruction prompt ([`prepareInstructions`](app/constants/index.ts)) and store the parsed JSON feedback.
+- View a resume detail page with score, ATS suggestions, and categorized feedback ([app/routes/Resume.tsx](app/routes/Resume.tsx)).
 
-## Getting Started
+Key entry points
 
-### Installation
+- App root and layout: [app/root.tsx](app/root.tsx)
+- Route configuration: [app/routes.ts](app/routes.ts)
+- Upload flow: [app/routes/Upload.tsx](app/routes/Upload.tsx)
+- Resume detail: [app/routes/Resume.tsx](app/routes/Resume.tsx)
+- Puter wrapper + state: [`usePuterStore`](app/lib/puter.ts)
+- PDF → image conversion: [`convertPdfToImage`](app/lib/pdf2img.ts)
+- AI prompt formatting: [`prepareInstructions`](app/constants/index.ts)
 
-Install the dependencies:
+Run locally
+
+1. Install deps:
 
 ```bash
 npm install
 ```
-
-### Development
-
-Start the development server with HMR:
-
-```bash
-npm run dev
-```
-
-Your application will be available at `http://localhost:5173`.
-
-## Building for Production
-
-Create a production build:
-
-```bash
-npm run build
-```
-
-## Deployment
-
-### Docker Deployment
-
-To build and run using Docker:
-
-```bash
-docker build -t my-app .
-
-# Run the container
-docker run -p 3000:3000 my-app
-```
-
-The containerized application can be deployed to any platform that supports Docker, including:
-
-- AWS ECS
-- Google Cloud Run
-- Azure Container Apps
-- Digital Ocean App Platform
-- Fly.io
-- Railway
-
-### DIY Deployment
-
-If you're familiar with deploying Node applications, the built-in app server is production-ready.
-
-Make sure to deploy the output of `npm run build`
-
-```
-├── package.json
-├── package-lock.json (or pnpm-lock.yaml, or bun.lockb)
-├── build/
-│   ├── client/    # Static assets
-│   └── server/    # Server-side code
-```
-
-## Styling
-
-This template comes with [Tailwind CSS](https://tailwindcss.com/) already configured for a simple default starting experience. You can use whatever CSS framework you prefer.
-
----
-
-Built with ❤️ using React Router.
