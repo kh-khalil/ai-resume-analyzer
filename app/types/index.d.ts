@@ -17,6 +17,17 @@ interface Resume {
   feedback: Feedback;
 }
 
+interface Suggestion {
+  type: "good" | "improve";
+  tip: string;
+  explanation: string;
+}
+
+interface ATSProps {
+  score: number;
+  suggestions: Suggestion[];
+}
+
 interface Feedback {
   overallScore: number;
   ATS: {
@@ -26,36 +37,8 @@ interface Feedback {
       tip: string;
     }[];
   };
-  toneAndStyle: {
-    score: number;
-    tips: {
-      type: "good" | "improve";
-      tip: string;
-      explanation: string;
-    }[];
-  };
-  content: {
-    score: number;
-    tips: {
-      type: "good" | "improve";
-      tip: string;
-      explanation: string;
-    }[];
-  };
-  structure: {
-    score: number;
-    tips: {
-      type: "good" | "improve";
-      tip: string;
-      explanation: string;
-    }[];
-  };
-  skills: {
-    score: number;
-    tips: {
-      type: "good" | "improve";
-      tip: string;
-      explanation: string;
-    }[];
-  };
+  toneAndStyle: ATSProps;
+  content: ATSProps;
+  structure: ATSProps;
+  skills: ATSProps;
 }

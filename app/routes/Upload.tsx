@@ -105,8 +105,8 @@ export default function Upload() {
     await kv.set(`resume:${uuid}`, JSON.stringify(data));
 
     setStatusText("Analysis complete! Redirecting to your resume...");
-
-    console.log("data: ", data);
+    setIsProcessing(false);
+    navigate(`/resume/${uuid}`);
   };
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
