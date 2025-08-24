@@ -60,7 +60,7 @@ const CategoryContent = ({
   return (
     <div className='flex flex-col gap-4 items-center w-full'>
       <div className='bg-gray-50 w-full rounded-lg px-5 py-4 grid grid-cols-2 gap-4'>
-        {tips?.map((tip, index) => (
+        {tips.map((tip, index) => (
           <div className='flex flex-row gap-2 items-center' key={index}>
             <img
               src={
@@ -74,7 +74,7 @@ const CategoryContent = ({
         ))}
       </div>
       <div className='flex flex-col gap-4 w-full'>
-        {tips?.map((tip, index) => (
+        {tips.map((tip, index) => (
           <div
             key={index + tip.tip}
             className={cn(
@@ -115,7 +115,7 @@ const Details = ({ feedback }: { feedback: Feedback }) => {
             />
           </AccordionHeader>
           <AccordionContent itemId='tone-style'>
-            <CategoryContent tips={feedback.toneAndStyle.suggestions} />
+            <CategoryContent tips={feedback.toneAndStyle.tips} />
           </AccordionContent>
         </AccordionItem>
         <AccordionItem id='content'>
@@ -126,7 +126,7 @@ const Details = ({ feedback }: { feedback: Feedback }) => {
             />
           </AccordionHeader>
           <AccordionContent itemId='content'>
-            <CategoryContent tips={feedback.content.suggestions} />
+            <CategoryContent tips={feedback.content.tips} />
           </AccordionContent>
         </AccordionItem>
         <AccordionItem id='structure'>
@@ -137,7 +137,7 @@ const Details = ({ feedback }: { feedback: Feedback }) => {
             />
           </AccordionHeader>
           <AccordionContent itemId='structure'>
-            <CategoryContent tips={feedback.structure.suggestions} />
+            <CategoryContent tips={feedback.structure.tips} />
           </AccordionContent>
         </AccordionItem>
         <AccordionItem id='skills'>
@@ -148,7 +148,7 @@ const Details = ({ feedback }: { feedback: Feedback }) => {
             />
           </AccordionHeader>
           <AccordionContent itemId='skills'>
-            <CategoryContent tips={feedback.skills.suggestions} />
+            <CategoryContent tips={feedback.skills.tips} />
           </AccordionContent>
         </AccordionItem>
       </Accordion>

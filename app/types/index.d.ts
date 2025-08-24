@@ -25,7 +25,7 @@ interface Suggestion {
 
 interface ATSProps {
   score: number;
-  suggestions: Suggestion[];
+  tips: Suggestion[];
 }
 
 interface Feedback {

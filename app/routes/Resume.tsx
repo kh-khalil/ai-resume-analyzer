@@ -21,6 +21,8 @@ export default function Resume() {
   const { id } = useLoaderData() as { id: string | null };
 
   const { auth, isLoading, fs, kv } = usePuterStore();
+  const [companyName, setCompanyName] = useState("");
+  const [jobTitle, setJobTitle] = useState("");
   const [imageUrl, setImageUrl] = useState("");
   const [resumeUrl, setResumeUrl] = useState("");
   const [feedback, setFeedback] = useState<Feedback | null>(null);
@@ -38,6 +40,8 @@ export default function Resume() {
       if (!resume) return;
 
       const data = JSON.parse(resume);
+      setCompanyName(data.companyName || "");
+      setJobTitle(data.jobTitle || "");
 
       const resumeBlob = await fs.read(data.resumePath);
       if (!resumeBlob) return;
@@ -83,18 +87,37 @@ export default function Resume() {
           )}
         </section>
         <section className='feedback-section'>
-          <h2 className='text-4xl !text-black font-bold'>Resume Review</h2>
           {feedback ? (
-            <div className='flex flex-col gap-8 animate-in fade-in duration-1000'>
-              <Summary feedback={feedback} />
-              <ATS
-                score={feedback.ATS.score || 0}
-                suggestions={feedback.ATS.tips || []}
-              />
-              <Details feedback={feedback} />
-            </div>
+            <>
+              <h2 className='text-4xl !text-black font-bold '>Resume Review</h2>
+              <h2 className='text-2xl !text-black font-bold '>
+                Company:
+                <span className='text-gray-500 font-normal'>
+                  {" " + companyName || "N/A"}
+                </span>
+              </h2>
+              <h2 className='text-2xl !text-black font-bold '>
+                Position:
+                <span className='text-gray-500 font-normal'>
+                  {" " + jobTitle || "N/A"}
+                </span>
+              </h2>
+              <div className='flex flex-col gap-8 animate-in fade-in duration-1000'>
+                <Summary feedback={feedback} />
+                <ATS
+                  score={feedback.ATS.score || 0}
+                  suggestions={feedback.ATS.tips || []}
+                />
+                <Details feedback={feedback} />
+              </div>
+            </>
           ) : (
-            <img src='/images/resume-scan-2.gif' className='w-full' />
+            <>
+              <h2 className='text-4xl !text-black font-bold '>
+                Fetching Resume Review Data...
+              </h2>
+              <img src='/images/resume-scan-2.gif' className='w-full' />
+            </>
           )}
         </section>
       </div>

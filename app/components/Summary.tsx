@@ -1,78 +1,48 @@
-import type { Key } from "react";
+import ScoreBadge from "~/components/ScoreBadge";
+import ScoreGauge from "~/components/ScoreGauge";
 
-export default function Summary({ score, suggestions }: any) {
-  // Determine background gradient based on score
-  const gradientClass =
-    score > 69
-      ? "from-green-100"
+const Category = ({ title, score }: { title: string; score: number }) => {
+  const textColor =
+    score > 70
+      ? "text-green-600"
       : score > 49
-        ? "from-yellow-100"
-        : "from-red-100";
-
-  // Determine icon based on score
-  const iconSrc =
-    score > 69
-      ? "/icons/ats-good.svg"
-      : score > 49
-        ? "/icons/ats-warning.svg"
-        : "/icons/ats-bad.svg";
-
-  // Determine subtitle based on score
-  const subtitle =
-    score > 69 ? "Great Job!" : score > 49 ? "Good Start" : "Needs Improvement";
+        ? "text-yellow-600"
+        : "text-red-600";
 
   return (
-    <div
-      className={`bg-gradient-to-b ${gradientClass} to-white rounded-2xl shadow-md w-full p-6`}>
-      {/* Top section with icon and headline */}
-      <div className='flex items-center gap-4 mb-6'>
-        <img src={iconSrc} alt='ATS Score Icon' className='w-12 h-12' />
-        <div>
-          <h2 className='text-2xl font-bold'>ATS Score - {score}/100</h2>
+    <div className='resume-summary'>
+      <div className='category'>
+        <div className='flex flex-row gap-2 items-center justify-center'>
+          <p className='text-2xl'>{title}</p>
+          <ScoreBadge score={score} />
         </div>
-      </div>
-
-      {/* Description section */}
-      <div className='mb-6'>
-        <h3 className='text-xl font-semibold mb-2'>{subtitle}</h3>
-        <p className='text-gray-600 mb-4'>
-          This score represents how well your resume is likely to perform in
-          Applicant Tracking Systems used by employers.
+        <p className='text-2xl'>
+          <span className={textColor}>{score}</span>/100
         </p>
-
-        {/* Suggestions list */}
-        <div className='space-y-3'>
-          {suggestions?.map(
-            (suggestion: Suggestion, index: Key | null | undefined) => (
-              <div key={index} className='flex items-start gap-3'>
-                <img
-                  src={
-                    suggestion.type === "good"
-                      ? "/icons/check.svg"
-                      : "/icons/warning.svg"
-                  }
-                  alt={suggestion.type === "good" ? "Check" : "Warning"}
-                  className='w-5 h-5 mt-1'
-                />
-                <p
-                  className={
-                    suggestion.type === "good"
-                      ? "text-green-700"
-                      : "text-amber-700"
-                  }>
-                  {suggestion.tip}
-                </p>
-              </div>
-            )
-          )}
-        </div>
       </div>
-
-      {/* Closing encouragement */}
-      <p className='text-gray-700 italic'>
-        Keep refining your resume to improve your chances of getting past ATS
-        filters and into the hands of recruiters.
-      </p>
     </div>
   );
-}
+};
+
+const Summary = ({ feedback }: { feedback: Feedback }) => {
+  return (
+    <div className='bg-white rounded-2xl shadow-md w-full'>
+      <div className='flex flex-row items-center p-4 gap-8'>
+        <ScoreGauge score={feedback.overallScore} />
+
+        <div className='flex flex-col gap-2'>
+          <h2 className='text-2xl font-bold'>Your Resume Score</h2>
+          <p className='text-sm text-gray-500'>
+            This score is calculated based on the variables listed below.
+          </p>
+        </div>
+      </div>
+
+      <Category title='Tone & Style' score={feedback.toneAndStyle.score} />
+      <Category title='Content' score={feedback.content.score} />
+      <Category title='Structure' score={feedback.structure.score} />
+      <Category title='Skills' score={feedback.skills.score} />
+    </div>
+  );
+};
+export default Summary;
