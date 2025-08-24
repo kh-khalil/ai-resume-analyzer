@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, useLoaderData, useNavigate } from "react-router";
+import { Link, useNavigate, useParams } from "react-router";
 import ATS from "~/components/ATS";
 import Details from "~/components/Details";
 import Summary from "~/components/Summary";
@@ -12,13 +12,8 @@ export const meta = () => [
   { name: "description", content: "Detailed overview of your resume" },
 ];
 
-export async function loader({ params }: any): Promise<{ id: string | null }> {
-  // minimal loader to satisfy the dev server for direct GET /resume/:id
-  return { id: params.id ?? null };
-}
-
 export default function Resume() {
-  const { id } = useLoaderData() as { id: string | null };
+  const { id } = useParams();
 
   const { auth, isLoading, fs, kv } = usePuterStore();
   const [companyName, setCompanyName] = useState("");
